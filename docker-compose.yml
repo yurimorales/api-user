@@ -10,10 +10,8 @@ services:
       - "3001:3001"
     volumes:
       - ./backend:/app
-      # Exclui node_modules do bind mount para evitar conflitos
       - /app/node_modules
-      # Persiste o banco de dados SQLite
-      - sqlite_data:/app/database.sqlite
+      - sqlite_data:/app/data
     environment:
       - NODE_ENV=development
       - PORT=3001
