@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: api-user-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      # Exclui node_modules do bind mount para evitar conflitos
+      - /app/node_modules
+      # Persiste o banco de dados SQLite
+      - sqlite_data:/app/database.sqlite
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+    networks:
+      - api-user-network
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
+
+networks:
+  api-user-network:
+    driver: bridge
